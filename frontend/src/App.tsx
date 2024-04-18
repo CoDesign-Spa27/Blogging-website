@@ -13,7 +13,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-      <Routes>
+      <Route   path='/blogs'>
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/blog/:id" element={<Blog />} />
@@ -23,7 +23,7 @@ function App() {
         />
         <Route path="/publish" element={<Publish />} />
         <Route path="/search" element={<Search/>} />
-      </Routes>
+      </Route>
       </BrowserRouter>
     </>
   )
