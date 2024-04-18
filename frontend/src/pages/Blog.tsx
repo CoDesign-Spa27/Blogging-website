@@ -1,7 +1,7 @@
 import BlogPost from "../components/BlogPost";
 import { useBlog } from "../hooks";
 import { useParams } from "react-router-dom";
-import { BlogSkeleton } from "../ui/BlogSkeleton";
+ 
 import AppBar from "../components/AppBar";
 import Loader from "../ui/Loader";
  
@@ -13,7 +13,7 @@ const Blog = () => {
   
   
 
-  if(loading){
+  if(loading || !blog){
     return <div> 
     <AppBar />
 <div >
