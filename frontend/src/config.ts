@@ -1,0 +1,1 @@
+export const BACKEND_URL="https://backend.mytuf8289.workers.dev"
