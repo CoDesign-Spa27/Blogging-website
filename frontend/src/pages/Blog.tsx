@@ -3,6 +3,7 @@ import { useBlog } from "../hooks";
 import { useParams } from "react-router-dom";
 import { BlogSkeleton } from "../ui/BlogSkeleton";
 import AppBar from "../components/AppBar";
+import Loader from "../ui/Loader";
  
 const Blog = () => {
   const {id}=useParams()
@@ -15,9 +16,9 @@ const Blog = () => {
   if(loading){
     return <div> 
     <AppBar />
-<div className='flex   justify-center'>
+<div >
 <div>
-<BlogSkeleton />
+ <Loader />
   
 </div>
 
