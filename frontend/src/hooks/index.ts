@@ -27,14 +27,15 @@ export const useBlog=({id} : {id:string})=>{
     useEffect(()=>{
         axios.get(`${BACKEND_URL}/api/v1/blog/${id}`,{
             headers:{
-                Authorization:localStorage.getItem('token')
+                Authorization:localStorage.getItem('blogToken')
             }
         }).then((response)=>{
             setBlog(response.data.post);
             setLoading(false)
-        }).catch((error)=>{
+        }).catch(( )=>{
             
-            alert("error while fetching data" + error)
+            alert("error while fetching data please signin "
+            )
             setLoading(false)
         })
     },[])
@@ -50,14 +51,14 @@ export const useBlogs=()=>{
     useEffect(()=>{
         axios.get(`${BACKEND_URL}/api/v1/blog/bulk`,{
             headers:{
-                Authorization:localStorage.getItem('token')
+                Authorization:localStorage.getItem('blogToken')
             }
         }).then((response)=>{
             setBlogs(response.data.post);
             setLoading(false)
-        }).catch((error)=>{
+        }).catch(()=>{
             
-            alert("error while fetching data" + error)
+            alert("Please signup if you do not have an account" )
             setLoading(false)
         })
     },[])

@@ -4,9 +4,19 @@ import AppBar from '../components/AppBar'
 import { useBlogs } from '../hooks'
  
 import { BlogSkeleton } from '../ui/BlogSkeleton';
+import { useNavigate } from 'react-router-dom';
 
 const Blogs = () => {
   const {loading,blogs}=useBlogs();
+  const navigate=useNavigate();
+  const checkToken=()=>{
+    let token=localStorage.getItem('blogToken');
+    if(!token){
+      navigate('/signup')
+    }
+  }
+  checkToken();
+  
   if(loading){
     return <div>
         <AppBar />

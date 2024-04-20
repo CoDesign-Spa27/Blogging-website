@@ -17,7 +17,7 @@ const navigate=useNavigate();
 const publishButton=async()=>{
 const response=  await axios.post(`${BACKEND_URL}/api/v1/blog`,{title,content},{
   headers:{
-    Authorization:localStorage.getItem("token")
+    Authorization:localStorage.getItem("blogToken")
   }
 })
 navigate(`/blog/${response.data.id}`)

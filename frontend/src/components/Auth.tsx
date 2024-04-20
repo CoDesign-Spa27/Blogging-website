@@ -1,9 +1,10 @@
-import { ChangeEvent,      useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { Link } from "react-router-dom";
 import { SigninType, SignupType } from "@sandeep28/common";
 import axios from "axios";
 import { BACKEND_URL } from '../config'
 import { useNavigate } from "react-router-dom";
+import Loader from "../ui/Loader";
 type AuthType = "signup" | "signin";
 
 type InputsMap = {
@@ -15,39 +16,69 @@ const Auth =  <T extends AuthType>({ type }: { type: T }) => {
   const initialInputs: InputsMap[T] = type === "signup"
   ? { name: "", email: "", password: "" }
   : { email: "", password: "" };
- 
-  
-
-  
-    
- 
+  const [loading,setLoading]=useState(false);
+  const [validPassword,setValidPassword]=useState(false);
   const [postInputs, setPostInputs] = useState(initialInputs);
-
-  const navigate=useNavigate();
-async  function sendRequest(){
  
+  const navigate=useNavigate();
+
+
+
+if(loading){
+  return <Loader />
+}
+ 
+function passwordValidation(e:ChangeEvent<HTMLInputElement>){
+  const validPassword = e.target.value;
+  setPostInputs((prevInputs)=>(
+{...prevInputs,
+postInputs:validPassword
+}
+  ))
+  setValidPassword(validPassword.length>=6);
+}
+
+
+async  function sendRequest(){
+setLoading(true);
+  
  if(type === "signup"){
  try { const response =await axios.post(`${BACKEND_URL}/api/v1/user/signup`,postInputs)
   const jwt=response.data.jwt
-  console.log("token: " + jwt);
+ 
 
-  localStorage.setItem("token",jwt)
+  localStorage.setItem("blogToken",jwt)
+ 
   navigate('/blogs');
+setLoading(false)
+
  }
  catch(e){ 
   console.log("Error recieved: " + e)
+setLoading(false)
  }
+ 
+
 }else{
   try { const response =await axios.post(`${BACKEND_URL}/api/v1/user/signin`,postInputs)
   const jwt=response.data.jwt
  
-  localStorage.setItem("token",jwt)
+  localStorage.setItem("blogToken",jwt)
+
   navigate('/blogs');
+setLoading(false)
+ 
+
  }
+ 
  catch(e){ 
   console.log("Error recieved: " + e)
- }
-  
+setLoading(false)
+ 
+
+}
+ 
+
 }
 
   }
@@ -86,19 +117,19 @@ async  function sendRequest(){
                 }));
               }}
             />
+
             <LabelledInput
               label="Password"
               type={"password"}
-         
+               
               
               placeholder="Enter your Pass"
-              onChange={(e) => {
-                setPostInputs((c) => ({
-                  ...c,
-                  password: e.target.value,
-                }));
-              }}
+              onChange={passwordValidation}
             />
+           {!validPassword && (
+            <p className="text-red-500 text-sm pb-4">Enter minimum 6 characters</p>
+           )}
+
           </div>
     
           <button 
