@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { Link } from "react-router-dom";
 import { SigninType, SignupType } from "@sandeep28/common";
 import axios from "axios";
@@ -11,12 +11,11 @@ type InputsMap = {
   signup: SignupType;
   signin: SigninType;
 };
-
 const Auth = <T extends AuthType>({ type }: { type: T }) => {
-  const initialInputs: InputsMap[T] =
-    type === "signup"
-      ? { name: "", email: "", password: "" }
-      : { email: "", password: "" };
+  const initialInputs: InputsMap[T] = type === "signup"
+    ? { name: "", email: "", password: "" }
+    : { email: "", password: "" };
+
   const [loading, setLoading] = useState(false);
   const [validPassword, setValidPassword] = useState(false);
   const [postInputs, setPostInputs] = useState(initialInputs);
@@ -27,21 +26,23 @@ const Auth = <T extends AuthType>({ type }: { type: T }) => {
     return <Loader />;
   }
   
-  useEffect(()=>{
+  
     let token=localStorage.getItem('blogToken');
     if(token){
       navigate('/blogs')
     }
-  })
+ 
 
-  function passwordValidation(e: ChangeEvent<HTMLInputElement>) {
-    const validPassword = e.target.value;
+ const passwordValidation= (e: ChangeEvent<HTMLInputElement>) => {
+    const newPassword = e.target.value;
     setPostInputs((prevInputs) => ({
       ...prevInputs,
-      postInputs: validPassword,
+      password: newPassword,
     }));
-    setValidPassword(validPassword.length >= 6);
-  }
+ 
+    setValidPassword(newPassword.length >= 6);
+  };
+
 
   async function sendRequest() {
     setLoading(true);

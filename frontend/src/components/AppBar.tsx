@@ -1,14 +1,18 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Avatar } from "./BlogCard";
-
+ 
 const AppBar = () => {
+  const navigate=useNavigate();
   const logout=()=>{
     localStorage.removeItem("blogToken");
+    navigate('/signin')
   }
   return (
     <div className="  flex items-center bg-transparent text-black text-lg font-bold justify-between py-4 px-10">
-      <div>
-        <Link to={"/blogs"}>Medium</Link>
+      <div className="text-xl font-extrabold">
+        <Link to={"/blogs"}>
+        InkSpire hub
+</Link>
       </div>
   
       <div className="max-w-md mx-auto w-full">
