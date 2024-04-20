@@ -47,9 +47,11 @@ const Search = () => {
   return (
     <div>
     <div className="  flex items-center bg-transparent text-black text-lg font-bold justify-between py-4 px-10">
-    <div>
-      <Link to={"/blogs"}>Medium</Link>
-    </div>
+    <div className="text-xl font-extrabold">
+        <Link to={"/blogs"}>
+        InkSpire hub
+</Link>
+      </div>
  
     <div className="max-w-md mx-auto w-full">
   
