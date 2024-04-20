@@ -1,8 +1,8 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { SigninType, SignupType } from "@sandeep28/common";
 import axios from "axios";
-import { BACKEND_URL } from '../config'
+import { BACKEND_URL } from "../config";
 import { useNavigate } from "react-router-dom";
 import Loader from "../ui/Loader";
 type AuthType = "signup" | "signin";
@@ -12,75 +12,77 @@ type InputsMap = {
   signin: SigninType;
 };
 
-const Auth =  <T extends AuthType>({ type }: { type: T }) => {
-  const initialInputs: InputsMap[T] = type === "signup"
-  ? { name: "", email: "", password: "" }
-  : { email: "", password: "" };
-  const [loading,setLoading]=useState(false);
-  const [validPassword,setValidPassword]=useState(false);
+const Auth = <T extends AuthType>({ type }: { type: T }) => {
+  const initialInputs: InputsMap[T] =
+    type === "signup"
+      ? { name: "", email: "", password: "" }
+      : { email: "", password: "" };
+  const [loading, setLoading] = useState(false);
+  const [validPassword, setValidPassword] = useState(false);
   const [postInputs, setPostInputs] = useState(initialInputs);
- 
-  const navigate=useNavigate();
 
+  const navigate = useNavigate();
 
-
-if(loading){
-  return <Loader />
-}
- 
-function passwordValidation(e:ChangeEvent<HTMLInputElement>){
-  const validPassword = e.target.value;
-  setPostInputs((prevInputs)=>(
-{...prevInputs,
-postInputs:validPassword
-}
-  ))
-  setValidPassword(validPassword.length>=6);
-}
-
-
-async  function sendRequest(){
-setLoading(true);
+  if (loading) {
+    return <Loader />;
+  }
   
- if(type === "signup"){
- try { const response =await axios.post(`${BACKEND_URL}/api/v1/user/signup`,postInputs)
-  const jwt=response.data.jwt
- 
+  useEffect(()=>{
+    let token=localStorage.getItem('blogToken');
+    if(token){
+      navigate('/blogs')
+    }
+  })
 
-  localStorage.setItem("blogToken",jwt)
- 
-  navigate('/blogs');
-setLoading(false)
+  function passwordValidation(e: ChangeEvent<HTMLInputElement>) {
+    const validPassword = e.target.value;
+    setPostInputs((prevInputs) => ({
+      ...prevInputs,
+      postInputs: validPassword,
+    }));
+    setValidPassword(validPassword.length >= 6);
+  }
 
- }
- catch(e){ 
-  console.log("Error recieved: " + e)
-setLoading(false)
- }
- 
+  async function sendRequest() {
+    setLoading(true);
 
-}else{
-  try { const response =await axios.post(`${BACKEND_URL}/api/v1/user/signin`,postInputs)
-  const jwt=response.data.jwt
- 
-  localStorage.setItem("blogToken",jwt)
+    if (type === "signup") {
+      try {
+        const response = await axios.post(
+          `${BACKEND_URL}/api/v1/user/signup`,
+          postInputs
+        );
+        const jwt = response.data.jwt;
 
-  navigate('/blogs');
-setLoading(false)
- 
+        localStorage.setItem("blogToken", jwt);
 
- }
- 
- catch(e){ 
-  console.log("Error recieved: " + e)
-setLoading(false)
- 
+        navigate("/blogs");
+        setLoading(false);
+      } catch (e) {
+        console.log("Error recieved: " + e);
+        setLoading(false);
+      }
+    } else {
+      try {
+        const response = await axios.post(
+          `${BACKEND_URL}/api/v1/user/signin`,
+          postInputs
+        );
+        const jwt = response.data.jwt;
 
-}
+        localStorage.setItem("blogToken", jwt);
+
+        navigate("/blogs");
+        setLoading(false);
+      } catch (e) {
+        console.log("Error recieved: " + e);
+        setLoading(false);
+      }
+    }
+
  
-
-}
-
+ 
+ 
   }
   return (
     <div className="h-screen flex justify-center flex-col">
@@ -88,27 +90,32 @@ setLoading(false)
         <div className="">
           <div className="text-3xl font-bold">Create an Account</div>
           <div>
-             {type === "signin" ? "Do not have an Account ?":"Already have a account ?" }
-            <Link className="underline px-1 hover:no-underline" to={type === "signin"?"/signup":"/signin"}>
-            {type === "signin" ?" Sign up":"Sign in"}
+            {type === "signin"
+              ? "Do not have an Account ?"
+              : "Already have a account ?"}
+            <Link
+              className="underline px-1 hover:no-underline"
+              to={type === "signin" ? "/signup" : "/signin"}
+            >
+              {type === "signin" ? " Sign up" : "Sign in"}
             </Link>
           </div>
           <div>
-         {type ==="signup"?<LabelledInput
-              label="Name"
-          
-              placeholder="Enter your name"
-              onChange={(e) => {
-                setPostInputs((c) => ({
-                  ...c,
-                  name: e.target.value,
-                }));
-              }}
-            /> : null}
+            {type === "signup" ? (
+              <LabelledInput
+                label="Name"
+                placeholder="Enter your name"
+                onChange={(e) => {
+                  setPostInputs((c) => ({
+                    ...c,
+                    name: e.target.value,
+                  }));
+                }}
+              />
+            ) : null}
 
             <LabelledInput
               label="Email"
-       
               placeholder="Enter your Email"
               onChange={(e) => {
                 setPostInputs((c) => ({
@@ -121,20 +128,23 @@ setLoading(false)
             <LabelledInput
               label="Password"
               type={"password"}
-               
-              
               placeholder="Enter your Pass"
               onChange={passwordValidation}
             />
-           {!validPassword && (
-            <p className="text-red-500 text-sm pb-4">Enter minimum 6 characters</p>
-           )}
-
+            {!validPassword && (
+              <p className="text-red-500 text-sm pb-4">
+                Enter minimum 6 characters
+              </p>
+            )}
           </div>
-    
-          <button 
-          onClick={sendRequest}
-          type="button" className="text-white bg-gray-800 hover:bg-gray-900 w-full focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 ">{type === "signup" ? "Signup" : "Signin"}</button>
+
+          <button
+            onClick={sendRequest}
+            type="button"
+            className="text-white bg-gray-800 hover:bg-gray-900 w-full focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 "
+          >
+            {type === "signup" ? "Signup" : "Signin"}
+          </button>
         </div>
       </div>
     </div>
@@ -145,14 +155,12 @@ interface LabelledInputType {
   placeholder: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   type?: string;
- 
 }
 function LabelledInput({
   label,
   placeholder,
   onChange,
   type,
- 
 }: LabelledInputType) {
   return (
     <div className="my-5">
@@ -162,7 +170,6 @@ function LabelledInput({
       <input
         onChange={onChange}
         type={type || "text"}
- 
         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         placeholder={placeholder}
         required
