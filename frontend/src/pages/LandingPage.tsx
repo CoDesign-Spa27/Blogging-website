@@ -1,6 +1,10 @@
+import { useNavigate } from "react-router-dom"
 import { TypeAnimation } from "react-type-animation"
  
 const LandingPage = () => {
+
+ const navigate=useNavigate();
+
   return (
     <div className="w-full flex md:gap-10 gap-5 flex-col justify-center
     items-center h-screen bg-gradient-to-r from-slate-900 to-slate-700">
@@ -23,7 +27,9 @@ const LandingPage = () => {
       />
         </div>
         <div className="py-4">
-        <button className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
+        <button 
+        onClick={()=>navigate('/blogs')}
+        className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
 <span className="relative md:px-5 px-2 py-2 md:py-2.5 transition-all  ease-in duration-300 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
 Take Flight To Blogs
 </span>
