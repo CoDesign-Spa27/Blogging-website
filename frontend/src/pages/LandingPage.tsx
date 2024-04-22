@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom"
 import { TypeAnimation } from "react-type-animation"
- 
+import Svg from '../assets/landingPageSvg.svg'
 const LandingPage = () => {
 
  const navigate=useNavigate();
@@ -19,8 +19,11 @@ const LandingPage = () => {
   return (
     <div className="w-full flex md:gap-10 gap-5 flex-col justify-center
     items-center h-screen bg-gradient-to-r from-slate-900 to-slate-700">
-        <div className="md:text-4xl text-2xl py-4 bg-gradient-to-r from-neutral-300 to-stone-400 bg-clip-text text-transparent font-extrabold"> 
+        <div className="md:text-5xl text-3xl py-4 bg-gradient-to-r from-neutral-300 to-stone-400 bg-clip-text text-transparent font-extrabold"> 
             InkSpire hub
+        </div>
+        <div className="md:h-72 flex flex-col  justify-center py-2 h-36 w-36 md:w-72">
+<img src={Svg} alt="hero" />
         </div>
         <div className="md:text-6xl px-2 sm:text-3xl text-2xl md:py-4 bg-gradient-to-r from-teal-200 to-teal-500 bg-clip-text text-transparent font-extrabold ">
       <TypeAnimation
