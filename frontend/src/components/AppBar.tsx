@@ -8,7 +8,8 @@ const AppBar = () => {
     navigate('/signin')
   }
   return (
-    <div className="  flex items-center bg-transparent text-black text-lg font-bold justify-between py-4 px-10">
+    <div  className="flex justify-center gap-2 items-center md:block flex-col">
+       <div className="flex items-center bg-transparent gap-10 text-black text-lg font-bold justify-between py-4 px-10">
       <div className="text-xl font-extrabold">
         <Link to={"/blogs"}>
         InkSpire hub
@@ -57,11 +58,40 @@ const AppBar = () => {
         </div>
     
       </div>
+      
       </div>
       <div>
       <Avatar name="Sandeep" />
       </div>
+      
     </div>
+    <div className="md:hidden pb-3 block">
+
+      <div className="flex gap-5 items-center ">
+       <div> 
+       <button
+       onClick={logout}
+          type="button"
+          className="text-white text-sm bottom-2.5 bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg  mx-2  px-4 py-2 text-center "
+        >
+         Logout
+        </button>
+        <Link to={'/publish'}>
+         <button
+          type="button"
+          className="text-white text-sm bottom-2.5 bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg  mx-2  px-4 py-2 text-center "
+        >
+          Add Blog +
+        </button>
+        </Link>
+        
+        </div>
+    
+      </div>
+      
+      </div>
+    </div>
+   
   );
 };
 
