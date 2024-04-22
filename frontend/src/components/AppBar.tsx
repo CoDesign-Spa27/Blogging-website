@@ -15,7 +15,7 @@ const AppBar = () => {
 </Link>
       </div>
   
-      <div className="max-w-md mx-auto w-full">
+      <div className="max-w-md hidden md:block mx-auto w-full">
       <Link to={"/search"}>
       <label  className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
     <div className="relative">
@@ -34,6 +34,8 @@ const AppBar = () => {
     </Link>
 
       </div>
+      <div className="md:block hidden">
+
       <div className="flex gap-5 items-center ">
        <div> 
        <button
@@ -53,9 +55,11 @@ const AppBar = () => {
         </Link>
         
         </div>
+    
+      </div>
+      </div>
       <div>
       <Avatar name="Sandeep" />
-      </div>
       </div>
     </div>
   );

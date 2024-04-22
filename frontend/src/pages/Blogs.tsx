@@ -37,8 +37,8 @@ const Blogs = () => {
   return (
     <div className='  h-screen'>
       <AppBar />
-    <div className='flex  justify-center my-2'>
-        <div className='flex max-w-xl flex-col items-center'>
+    <div className='flex justify-center my-2'>
+        <div className='flex max-w-xl mx-2 flex-col items-center'>
    
    {blogs.map((blog,key) => <BlogCard
    id={blog.id}

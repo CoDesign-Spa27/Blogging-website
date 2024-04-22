@@ -20,28 +20,31 @@ const BlogCard = ({
 }: BlogCardProps) => {
  
   return <Link to={`/blog/${id}`}> 
-   <div className="p-4 bg-slate-100 rounded-xl text-gray-800 m-2 flex flex-col gap-1 justify-center cursor-pointer max-w-screen-md w-screen">
+  <div>
+  <div className="p-4 bg-slate-100 rounded-xl  text-gray-800 m-2 flex flex-col gap-1 justify-center cursor-pointer max-w-screen-md w-screen">
     
-        <div className="flex gap-2 items-center">
-        <div>
-    <Avatar name={authorName}/>
-          
-    </div>
-      <div className="text-sm capitalize font-medium text-gray-500">
-        {authorName}. | {publishedDate}
-      </div>
-      </div>
-      <div className="text-xl font-bold capitalize">{title}</div>
-      <div
-      className="text-md"
-      >{`${content.slice(0, 100) + "...."}`}
-      <button className="font-medium text-sm text-green-600">read more</button>
-      </div>
-      <div className="text-gray-500 text-sm font-semibold">
-        {`${Math.ceil(content.length / 100)} minutes read`}
-      </div>
-       
-    </div>
+    <div className="flex gap-2 items-center">
+    <div>
+<Avatar name={authorName}/>
+      
+</div>
+  <div className="text-sm capitalize font-medium text-gray-500">
+    {authorName}. | {publishedDate}
+  </div>
+  </div>
+  <div className="text-xl font-bold capitalize">{title}</div>
+  <div
+  className="text-md"
+  >{`${content.slice(0, 100) + "...."}`}
+  <button className="font-medium text-sm text-green-600">read more</button>
+  </div>
+  <div className="text-gray-500 text-sm font-semibold">
+    {`${Math.ceil(content.length / 100)} minutes read`}
+  </div>
+   
+</div>
+  </div>
+  
     </Link>
 };
 
